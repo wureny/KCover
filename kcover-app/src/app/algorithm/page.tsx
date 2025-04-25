@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { Tab } from '@headlessui/react'
 import { ArrowPathIcon, BeakerIcon, BoltIcon } from '@heroicons/react/24/outline'
 import InputPanel from '@/components/algorithm/input-panel'
@@ -12,7 +12,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function AlgorithmPage() {
+function AlgorithmContent() {
   const searchParams = useSearchParams()
   const initialMode = searchParams.get('mode') === 'accurate' ? 1 : 0
   
@@ -139,5 +139,13 @@ export default function AlgorithmPage() {
         <ResultPanel results={results} params={params} />
       )}
     </div>
+  )
+}
+
+export default function AlgorithmPage() {
+  return (
+    <Suspense fallback={<div className="p-4 text-center">Loading...</div>}>
+      <AlgorithmContent />
+    </Suspense>
   )
 } 
