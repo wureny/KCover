@@ -20,11 +20,11 @@ export default function AlgorithmPage() {
   const [isCalculating, setIsCalculating] = useState(false)
   const [results, setResults] = useState<string[][]>([])
   const [params, setParams] = useState({
-    m: 45, // 样本总数
-    n: 8,  // 随机选择的样本数
-    k: 6,  // 输出组大小
-    j: 4,  // 需要覆盖的子集大小
-    s: 4,  // 交集阈值
+    m: 45, // Total number of samples
+    n: 8,  // Number of randomly selected samples
+    k: 6,  // Output group size
+    j: 4,  // Subset size to be covered
+    s: 4,  // Intersection threshold
   })
 
   const handleParamsChange = (newParams: typeof params) => {
@@ -34,7 +34,7 @@ export default function AlgorithmPage() {
   const handleCalculate = () => {
     setIsCalculating(true)
 
-    // 使用setTimeout来避免UI阻塞
+    // Using setTimeout to avoid UI blocking
     setTimeout(() => {
       try {
         const mode = selectedTabIndex === 0 ? 'speed' : 'accurate'
@@ -46,12 +46,12 @@ export default function AlgorithmPage() {
           result = solveWithAccurateMode(params)
         }
 
-        // 格式化结果
+        // Format results
         const formattedResults = formatResults(result)
         setResults(formattedResults)
       } catch (error) {
-        console.error('计算过程中出错:', error)
-        alert('计算过程中出错，请检查参数设置或刷新页面重试')
+        console.error('Error during calculation:', error)
+        alert('Error during calculation. Please check parameter settings or refresh the page.')
       } finally {
         setIsCalculating(false)
       }
@@ -60,7 +60,7 @@ export default function AlgorithmPage() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8">K-Cover 算法演示</h1>
+      <h1 className="text-3xl font-bold mb-8">K-Cover Algorithm Demo</h1>
       
       <div className="bg-white dark:bg-slate-800 rounded-lg shadow p-6 mb-8">
         <Tab.Group selectedIndex={selectedTabIndex} onChange={setSelectedTabIndex}>
@@ -78,7 +78,7 @@ export default function AlgorithmPage() {
               }
             >
               <BoltIcon className="h-5 w-5" aria-hidden="true" />
-              <span>速度模式</span>
+              <span>Speed Mode</span>
             </Tab>
             <Tab
               className={({ selected }) =>
@@ -93,21 +93,21 @@ export default function AlgorithmPage() {
               }
             >
               <BeakerIcon className="h-5 w-5" aria-hidden="true" />
-              <span>精准模式</span>
+              <span>Accurate Mode</span>
             </Tab>
           </Tab.List>
           <Tab.Panels className="mt-6">
             <Tab.Panel>
               <div className="mb-4">
                 <p className="text-slate-600 dark:text-slate-300">
-                  速度模式采用贪心算法，能快速求得近似最优解，适合大规模数据处理和对计算速度要求高的场景。
+                  Speed Mode uses a greedy algorithm to quickly find near-optimal solutions, suitable for large-scale data processing and scenarios with high speed requirements.
                 </p>
               </div>
             </Tab.Panel>
             <Tab.Panel>
               <div className="mb-4">
                 <p className="text-slate-600 dark:text-slate-300">
-                  精准模式采用整数线性规划（ILP）方法，能保证获得最优解，但计算时间较长，适合对精度要求高的场景。
+                  Accurate Mode uses integer linear programming (ILP) method to guarantee optimal solutions, but takes longer to compute. Suitable for scenarios with high precision requirements.
                 </p>
               </div>
             </Tab.Panel>
@@ -126,10 +126,10 @@ export default function AlgorithmPage() {
             {isCalculating ? (
               <>
                 <ArrowPathIcon className="h-5 w-5 mr-2 animate-spin" />
-                计算中...
+                Calculating...
               </>
             ) : (
-              '开始计算'
+              'Start Calculation'
             )}
           </button>
         </div>

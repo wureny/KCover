@@ -4,11 +4,11 @@ import React, { useState } from 'react'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 
 type Params = {
-  m: number // 样本总数
-  n: number // 随机选择的样本数
-  k: number // 输出组大小
-  j: number // 需要覆盖的子集大小
-  s: number // 交集阈值
+  m: number // Total number of samples
+  n: number // Number of randomly selected samples
+  k: number // Output set size
+  j: number // Size of subset to be covered
+  s: number // Intersection threshold
 }
 
 type ResultPanelProps = {
@@ -24,17 +24,17 @@ export default function ResultPanel({ results, params }: ResultPanelProps) {
   }
 
   const handleDownload = () => {
-    // 构建下载内容
+    // Build download content
     const { m, n, k, j, s } = params
     const content = [
-      `# K-Cover 算法结果`,
-      `参数设置: m=${m}, n=${n}, k=${k}, j=${j}, s=${s}`,
-      `共找到 ${results.length} 组结果:`,
+      `# K-Cover Algorithm Results`,
+      `Parameters: m=${m}, n=${n}, k=${k}, j=${j}, s=${s}`,
+      `Found ${results.length} result sets:`,
       '',
       ...results.map((group, idx) => `${idx + 1}. ${group.join(', ')}`),
     ].join('\n')
 
-    // 创建下载链接
+    // Create download link
     const blob = new Blob([content], { type: 'text/plain' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
@@ -49,20 +49,20 @@ export default function ResultPanel({ results, params }: ResultPanelProps) {
   return (
     <div className="bg-white dark:bg-slate-800 rounded-lg shadow p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold">计算结果</h2>
+        <h2 className="text-xl font-bold">Results</h2>
         <button
           onClick={handleDownload}
           className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
         >
           <ArrowDownTrayIcon className="w-5 h-5 mr-1" />
-          导出结果
+          Export Results
         </button>
       </div>
 
       <div className="mb-4">
         <p className="text-slate-600 dark:text-slate-300">
-          找到 <span className="font-semibold">{results.length}</span> 组满足条件的子集。
-          参数: m={params.m}, n={params.n}, k={params.k}, j={params.j}, s={params.s}
+          Found <span className="font-semibold">{results.length}</span> sets meeting the criteria.
+          Parameters: m={params.m}, n={params.n}, k={params.k}, j={params.j}, s={params.s}
         </p>
       </div>
 
@@ -77,7 +77,7 @@ export default function ResultPanel({ results, params }: ResultPanelProps) {
             }`}
             onClick={() => handleResultClick(idx)}
           >
-            <div className="font-medium mb-2">组 {idx + 1}</div>
+            <div className="font-medium mb-2">Set {idx + 1}</div>
             <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
               {result.map((item, itemIdx) => (
                 <div
