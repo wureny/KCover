@@ -1,0 +1,56 @@
+"use client"
+
+import Link from 'next/link'
+
+export default function Home() {
+  return (
+    <div className="max-w-6xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl mb-4">
+          <span className="block">K-Cover 算法演示</span>
+          <span className="block text-blue-600 dark:text-blue-400">最优样本选择系统</span>
+        </h1>
+        <p className="max-w-2xl mx-auto mt-5 text-xl text-gray-500 dark:text-gray-300">
+          高效解决最小集合覆盖问题，优化样本选择的精准度和速度
+        </p>
+        <div className="mt-12 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div className="bg-white dark:bg-slate-800 shadow overflow-hidden rounded-lg">
+              <div className="px-4 py-5 sm:p-6">
+                <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">精准模式</h3>
+                <div className="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-300">
+                  <p>采用整数线性规划方法求解，保证获得最优解，适合对精度要求高的场景。</p>
+                </div>
+                <div className="mt-5">
+                  <Link 
+                    href="/algorithm?mode=accurate" 
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  >
+                    前往测试
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white dark:bg-slate-800 shadow overflow-hidden rounded-lg">
+              <div className="px-4 py-5 sm:p-6">
+                <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">速度模式</h3>
+                <div className="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-300">
+                  <p>采用贪心算法求解，快速获得近似最优解，适合大规模数据和追求响应速度的场景。</p>
+                </div>
+                <div className="mt-5">
+                  <Link 
+                    href="/algorithm" 
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                  >
+                    前往测试
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
