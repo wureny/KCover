@@ -16,19 +16,19 @@ export default function Header() {
               href="/" 
               className="text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
-              首页
+              Home
             </Link>
             <Link 
               href="/algorithm" 
               className="text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
-              算法演示
+              Algorithm Demo
             </Link>
             <Link 
               href="/docs" 
               className="text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
-              文档说明
+              Documentation
             </Link>
           </nav>
         </div>
