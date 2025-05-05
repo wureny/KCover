@@ -9,6 +9,7 @@ interface InputPanelProps {
     k: number // Output group size
     j: number // Subset size to be covered
     s: number // Intersection threshold
+    minGroups: number // Minimum number of k-groups required
   }
   onParamsChange: (params: InputPanelProps['params']) => void
 }
@@ -46,6 +47,9 @@ const InputPanel: React.FC<InputPanelProps> = ({ params, onParamsChange }) => {
       case 's':
         if (value < 1) return 'Must be at least 1'
         if (value > localParams.j) return `Must be less than or equal to j (${localParams.j})`
+        break
+      case 'minGroups':
+        if (value < 1) return 'Must be at least 1'
         break
     }
     return ''
@@ -220,6 +224,27 @@ const InputPanel: React.FC<InputPanelProps> = ({ params, onParamsChange }) => {
           />
           {errors.s && <p className="mt-1 text-sm text-red-600">{errors.s}</p>}
         </div>
+        
+        <div>
+          <label htmlFor="minGroups" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+            At least s samples
+            <span className="ml-1 text-xs text-slate-500 dark:text-slate-400">[≥1]</span>
+          </label>
+          <input
+            type="number"
+            name="minGroups"
+            id="minGroups"
+            value={localParams.minGroups}
+            onChange={handleInputChange}
+            className={`block w-full px-3 py-2 border rounded-md shadow-sm text-sm ${
+              errors.minGroups 
+                ? 'border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500' 
+                : 'border-slate-300 dark:border-slate-600 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white'
+            }`}
+            min="1"
+          />
+          {errors.minGroups && <p className="mt-1 text-sm text-red-600">{errors.minGroups}</p>}
+        </div>
       </div>
       
       <div className="mt-4 text-sm text-slate-500 dark:text-slate-400">
@@ -230,6 +255,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ params, onParamsChange }) => {
           <li>Output Group Size (k) must not exceed Total Sample Size (m)</li>
           <li>Subset Size (j) must not exceed Output Group Size (k)</li>
           <li>Intersection Threshold (s) must not exceed Subset Size (j)</li>
+          <li>At least s samples controls the minimum samples required</li>
         </ul>
       </div>
     </div>

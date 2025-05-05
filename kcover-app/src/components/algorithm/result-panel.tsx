@@ -9,6 +9,7 @@ type Params = {
   k: number // Output set size
   j: number // Size of subset to be covered
   s: number // Intersection threshold
+  minGroups: number // Minimum number of k-groups required
 }
 
 type ResultPanelProps = {
@@ -25,10 +26,10 @@ export default function ResultPanel({ results, params }: ResultPanelProps) {
 
   const handleDownload = () => {
     // Build download content
-    const { m, n, k, j, s } = params
+    const { m, n, k, j, s, minGroups } = params
     const content = [
       `# K-Cover Algorithm Results`,
-      `Parameters: m=${m}, n=${n}, k=${k}, j=${j}, s=${s}`,
+      `Parameters: m=${m}, n=${n}, k=${k}, j=${j}, s=${s}, minGroups=${minGroups}`,
       `Found ${results.length} result sets:`,
       '',
       ...results.map((group, idx) => `${idx + 1}. ${group.join(', ')}`),
@@ -62,7 +63,11 @@ export default function ResultPanel({ results, params }: ResultPanelProps) {
       <div className="mb-4">
         <p className="text-slate-600 dark:text-slate-300">
           Found <span className="font-semibold">{results.length}</span> sets meeting the criteria.
-          Parameters: m={params.m}, n={params.n}, k={params.k}, j={params.j}, s={params.s}
+          Parameters: m={params.m}, n={params.n}, k={params.k}, j={params.j}, s={params.s}, minGroups={params.minGroups}
+        </p>
+        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+          <span className="font-medium">Min. k-Groups:</span> {params.minGroups} 
+          <span className="ml-2">- 算法至少需要找到{params.minGroups}个k-组来满足所有覆盖条件</span>
         </p>
       </div>
 
